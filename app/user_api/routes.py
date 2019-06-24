@@ -2,7 +2,7 @@ from flask import make_response, request, json, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from passlib.hash import sha256_crypt
 from . import user_api_blueprint
-from models import db, User
+from db import db
 
 
 @user_api_blueprint.route("/api/user/docs.json", methods=['GET'])
@@ -16,7 +16,7 @@ def swagger_api_docs_yml():
 @user_api_blueprint.route('/api/users', methods=['GET'])
 def get_users():
     data = []
-    for row in User.query.all():
+    for row in db.session.query(db.User).filter(db.User.username != None):
         data.append(row.to_json())
 
     response = jsonify(data)
@@ -28,7 +28,9 @@ def get_users():
 def post_login():
 
     username = request.form['username']
-    user = User.query.filter_by(username=username).first()
+    user = db.session.query(db.User).filter(
+        db.User.username == username).first()
+
     if user:
         if sha256_crypt.verify(str(request.form['password']), user.password):
             user.encode_api_key()
@@ -40,16 +42,21 @@ def post_login():
     return make_response(jsonify({'message': 'Not logged in'}), 401)
 
 
+@login_required
 @user_api_blueprint.route('/api/user/<username>/exists', methods=['GET'])
 def get_username(username):
 
-    item = User.query.filter_by(username=username).first()
-    if item is not None:
-        response = jsonify({'result': True})
-    else:
-        response = jsonify({'message': 'Cannot find username'}), 404
+    if current_user.is_authenticated:
 
-    return response
+        item = db.session.query(db.User).filter_by(
+            db.User.username == 'username').first()
+        if item is not None:
+            response = jsonify({'result': True})
+        else:
+            response = jsonify({'message': 'Cannot find username'}), 404
+
+        return response
+    return make_response(jsonify({'message': 'You are not logged in'}))
 
 
 @user_api_blueprint.route('/api/user/logout', methods=['POST'])
@@ -82,7 +89,7 @@ def post_register():
 
     password = sha256_crypt.hash((str(request.form['password'])))
 
-    user = User()
+    user = db.User()
     user.email = email
     user.first_name = first_name
     user.last_name = last_name

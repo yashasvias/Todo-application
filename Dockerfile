@@ -1,6 +1,6 @@
 FROM python:3-alpine
 
-MAINTAINER Peter Fisher
+MAINTAINER karanjit singh
 
 COPY ./app/requirements.txt /app/requirements.txt
 

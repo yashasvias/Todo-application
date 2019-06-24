@@ -1,163 +1,278 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "description": "User service for order management system micro service",
-        "version": "1.0.0",
-        "title": "User Service"
+  "swagger": "2.0",
+  "info": {
+    "description": "Todo application",
+    "version": "1.0.0",
+    "title": "Todo application"
+  },
+  "host": "localhost:5000",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get all the users",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
     },
-    "host": "192.168.99.102:8082",
-    "basePath": "/api",
-    "schemes": [
-        "http"
-    ],
-    "paths": {
-      "/users": {
-        "get": {
-          "tags": [
-            "User"
-          ],
-          "summary": "Get all the users",
-          "description": "",
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "successful operation"
-            }
+    "/user/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logs a user into the service",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "formData",
+            "description": "Users username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "Users password",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logged in'"
+          },
+          "401": {
+            "description": "Not logged in"
           }
         }
-      },
-      "/user/login": {
-        "post": {
-          "tags": [
-            "User"
-          ],
-          "summary": "Logs a user into the service",
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "name": "username",
-              "in": "formData",
-              "description": "Users username",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "password",
-              "in": "formData",
-              "description": "Users password",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Logged in'"
-            },
-            "401": {
-              "description": "Not logged in"
-            }
+      }
+    },
+    "/user/logout": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logout a user out of the service",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Logged out'"
+          },
+          "401": {
+            "description": "Not logged in"
           }
         }
-      },
-      "/user/{username}/exists": {
-        "get": {
-          "tags": [
-            "User"
-          ],
-          "summary": "Checks if the username exists",
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "name": "username",
-              "in": "path",
-              "description": "Users username",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Found'"
-            },
-            "404": {
-              "description": "Cannot find username"
-            }
+      }
+    },
+    "/user/{username}/exists": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Checks if the username exists",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "Users username",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found'"
+          },
+          "404": {
+            "description": "Cannot find username"
           }
         }
-      },
-      "/user": {
-        "get": {
-          "tags": [
-            "User"
-          ],
-          "summary": "Returns the user",
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "Found'"
-            },
-            "404": {
-              "description": "You are not logged in"
-            }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Returns the user",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Found'"
+          },
+          "404": {
+            "description": "You are not logged in"
           }
         }
-      },
-      "/user/create": {
-        "post": {
-          "tags": [
-            "User"
-          ],
-          "summary": "Logs a user into the service",
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "name": "first_name",
-              "in": "formData",
-              "description": "Users first name",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "last_name",
-              "in": "formData",
-              "description": "Users last name",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "email",
-              "in": "formData",
-              "description": "Users email",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "username",
-              "in": "formData",
-              "description": "Users username",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Logged in'"
-            },
-            "401": {
-              "description": "Not logged in"
-            }
+      }
+    },
+    "/user/create": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logs a user into the service",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "first_name",
+            "in": "formData",
+            "description": "Users first name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "last_name",
+            "in": "formData",
+            "description": "Users last name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Users email",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "username",
+            "in": "formData",
+            "description": "Users username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "Users password",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logged in'"
+          },
+          "401": {
+            "description": "Not logged in"
+          }
+        }
+      }
+    },
+    "/todoitem/create": {
+      "post": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "create a new item",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "formData",
+            "description": "todo title",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "comment",
+            "in": "formData",
+            "description": "comment",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "item created'"
+          },
+          "401": {
+            "description": "Not logged in"
+          }
+        }
+      }
+    },
+     "/todoitem/<id>": {
+      "put": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "update item",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "formData",
+            "description": "todo title",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "username",
+            "in": "formData",
+            "description": "User name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "item created'"
+          },
+          "401": {
+            "description": "Not logged in"
+          }
+        }
+      }
+    },
+    "/todoitems": {
+      "get": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "get item",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "item not found'"
+          },
+          "401": {
+            "description": "Not logged in"
           }
         }
       }
     }
+  }
 }

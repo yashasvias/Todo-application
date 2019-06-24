@@ -1,0 +1,9 @@
+{
+  "db": {
+    "url": "localhost",
+    "port":"3306",
+    "db":"todolist",
+    "user":"root",
+    "pass":"password"
+  }
+}
